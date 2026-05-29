@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Course in IDE</title>
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Open Toolbox Course Link</h1>
+
+        <form id="courseForm">
+            <div class="form-group">
+                <label for="marketplaceId">Marketplace ID:</label>
+                <input
+                    type="number"
+                    id="marketplaceId"
+                    name="marketplaceId"
+                    placeholder="Enter course marketplace ID"
+                    value="16630"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="programmingLanguage">Programming Language:</label>
+                <select id="programmingLanguage" name="programmingLanguage" required>
+                    <option value="Python" selected>Python</option>
+                    <option value="Kotlin">Kotlin</option>
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="Java">Java</option>
+                    <option value="Go">Go</option>
+                    <option value="Scala">Scala</option>
+                    <option value="Objective-C">Objective-C</option>
+                    <option value="Rust">Rust</option>
+                    <option value="C++">C++</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-generate">Open in IDE</button>
+        </form>
+
+        <div id="result" class="result hidden">
+            <p class="help-text">
+                Course didn't open? You may need to install or update Toolbox
+            </p>
+            <a href="https://www.jetbrains.com/toolbox-app/" target="_blank" class="toolbox-link">
+                Download JetBrains Toolbox
+            </a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
