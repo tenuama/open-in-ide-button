@@ -43,7 +43,16 @@ label {
     font-size: 14px;
 }
 
+.input-hint {
+    display: block;
+    color: rgba(25, 25, 28, 0.6);
+    font-size: 12px;
+    line-height: 16px;
+    margin-top: 4px;
+}
+
 input[type="number"],
+input[type="text"],
 select {
     width: 100%;
     padding: 7px 7px;
@@ -79,11 +88,13 @@ input[type="number"] {
 }
 
 input[type="number"]:hover,
+input[type="text"]:hover,
 select:hover {
     border-color: rgba(25, 25, 28, 0.5);
 }
 
 input[type="number"]:focus,
+input[type="text"]:focus,
 select:focus {
     outline: none;
     border-width: 2px;
@@ -151,6 +162,24 @@ select:focus {
     max-width: 400px;
     width: 90%;
     z-index: 1001;
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    line-height: 1;
+    color: rgba(25, 25, 28, 0.4);
+    cursor: pointer;
+    padding: 4px 8px;
+    transition: color 0.2s;
+}
+
+.modal-close:hover {
+    color: #19191C;
 }
 
 .modal-content h3 {
@@ -228,6 +257,132 @@ select:focus {
     display: none;
 }
 
+/* Toast notification styles */
+.toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: white;
+    border: 1px solid rgba(25, 25, 28, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 16px 20px;
+    border-radius: 8px;
+    z-index: 999;
+    min-width: 280px;
+    max-width: 320px;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.toast-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    line-height: 1;
+    color: rgba(25, 25, 28, 0.4);
+    cursor: pointer;
+    padding: 4px 8px;
+    transition: color 0.2s;
+}
+
+.toast-close:hover {
+    color: #19191C;
+}
+
+.toast-title {
+    color: #19191C;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 22px;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.toast-text {
+    color: #19191C;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+#toastLoading .toast-text {
+    margin-bottom: 0;
+}
+
+#toastHelp {
+    padding-top: 8px;
+}
+
+.toast-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.btn-toast {
+    padding: 6px 16px;
+    background: #6B57FF;
+    color: white;
+    border: none;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    cursor: pointer;
+    font-family: 'JetBrains Sans', Inter, system-ui, -apple-system, BlinkMacSystemFont,
+        'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Droid Sans', 'Helvetica Neue',
+        Arial, sans-serif;
+}
+
+.btn-toast:hover {
+    background: #8979FF;
+}
+
+.btn-toast-secondary {
+    background: white;
+    color: #19191C;
+    border: 1px solid rgba(25, 25, 28, 0.2);
+}
+
+.btn-toast-secondary:hover {
+    background: #F7F7F7;
+}
+
+.toolbox-link-small {
+    display: block;
+    padding: 8px 20px;
+    background: #6B57FF;
+    color: white;
+    text-decoration: none;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: center;
+    font-family: 'JetBrains Sans', Inter, system-ui, -apple-system, BlinkMacSystemFont,
+        'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Droid Sans', 'Helvetica Neue',
+        Arial, sans-serif;
+    margin-top: 4px;
+}
+
+.toolbox-link-small:hover {
+    background: #8979FF;
+}
+
 @media (max-width: 600px) {
     .container {
         padding: 24px;
@@ -243,5 +398,13 @@ select:focus {
 
     .btn-copy {
         width: 100%;
+    }
+
+    .toast {
+        bottom: 16px;
+        right: 16px;
+        left: 16px;
+        min-width: unset;
+        max-width: unset;
     }
 }

@@ -75,31 +75,38 @@ function resolveSupportedIdes(courseLanguage) {
 /**
  * Generates a Toolbox course opening link.
  */
-function generateToolboxCourseOpeningLink(courseId, supportedIdes) {
+function generateToolboxCourseOpeningLink(courseId, supportedIdes, studyItemId = null) {
   const url = new URL('jetbrains://educational');
   url.searchParams.append('courseId', courseId.toString());
   url.searchParams.append('source', 'marketplace');
   url.searchParams.append('tools', supportedIdes.join(','));
   url.searchParams.append('minToolVersion', '251');
   url.searchParams.append('minPluginVersion', '2025.7');
+
+  if (studyItemId) {
+    url.searchParams.append('study_item_id', studyItemId);
+    url.searchParams.append('lti_launch_id', `marketplace-${courseId}-${studyItemId}`);
+  }
   return url.toString();
 }
 
 // Initialize the form
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('courseForm');
-  const modal = document.getElementById('modal');
-  const questionView = document.getElementById('questionView');
-  const helpView = document.getElementById('helpView');
-  const yesBtn = document.getElementById('yesBtn');
-  const noBtn = document.getElementById('noBtn');
-  const modalOverlay = document.querySelector('.modal-overlay');
+  const toast = document.getElementById('toast');
+  const toastLoading = document.getElementById('toastLoading');
+  const toastQuestion = document.getElementById('toastQuestion');
+  const toastHelp = document.getElementById('toastHelp');
+  const toastYesBtn = document.getElementById('toastYesBtn');
+  const toastNoBtn = document.getElementById('toastNoBtn');
+  const toastClose = document.getElementById('toastClose');
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
     const marketplaceId = document.getElementById('marketplaceId').value;
     const programmingLanguage = document.getElementById('programmingLanguage').value;
+    const studyItemId = document.getElementById('studyItemId').value.trim();
 
     if (!marketplaceId || !programmingLanguage) {
       alert('Please fill in all fields');
@@ -115,34 +122,45 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const link = generateToolboxCourseOpeningLink(courseNumericId, supportedIdes);
+    const link = generateToolboxCourseOpeningLink(courseNumericId, supportedIdes, studyItemId || null);
 
     // Open the link immediately
     window.location.href = link;
 
-    // Show modal after a delay
+    // Show toast with "Opening course..." immediately
+    toast.classList.remove('hidden');
+    toastLoading.classList.remove('hidden');
+    toastQuestion.classList.add('hidden');
+
+    // After 6 seconds, show the question
     setTimeout(() => {
-      modal.classList.remove('hidden');
-    }, 1000);
+      toastLoading.classList.add('hidden');
+      toastQuestion.classList.remove('hidden');
+    }, 15000);
   });
 
-  // Yes button - close modal
-  yesBtn.addEventListener('click', () => {
-    modal.classList.add('hidden');
-    questionView.classList.remove('hidden');
-    helpView.classList.add('hidden');
+  // Toast Yes button - just hide the toast
+  toastYesBtn.addEventListener('click', () => {
+    toast.classList.add('hidden');
+    toastClose.classList.add('hidden');
+    toastLoading.classList.remove('hidden');
+    toastQuestion.classList.add('hidden');
+    toastHelp.classList.add('hidden');
   });
 
-  // No button - show help message
-  noBtn.addEventListener('click', () => {
-    questionView.classList.add('hidden');
-    helpView.classList.remove('hidden');
+  // Toast No button - show help in toast
+  toastNoBtn.addEventListener('click', () => {
+    toastQuestion.classList.add('hidden');
+    toastHelp.classList.remove('hidden');
+    toastClose.classList.remove('hidden');
   });
 
-  // Close modal when clicking overlay
-  modalOverlay.addEventListener('click', () => {
-    modal.classList.add('hidden');
-    questionView.classList.remove('hidden');
-    helpView.classList.add('hidden');
+  // Close toast when clicking X button
+  toastClose.addEventListener('click', () => {
+    toast.classList.add('hidden');
+    toastClose.classList.add('hidden');
+    toastLoading.classList.remove('hidden');
+    toastQuestion.classList.add('hidden');
+    toastHelp.classList.add('hidden');
   });
 });

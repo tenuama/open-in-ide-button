@@ -40,29 +40,44 @@
                 </select>
             </div>
 
+            <div class="form-group">
+                <label for="studyItemId">Task ID (optional):</label>
+                <input
+                    type="text"
+                    id="studyItemId"
+                    name="studyItemId"
+                    placeholder="Task ID from course structure API"
+                >
+                <small class="input-hint">Leave empty to open the course from the beginning. Use task ID from /api/plugin/course-structure</small>
+            </div>
+
             <button type="submit" class="btn-generate">Open in IDE</button>
         </form>
 
     </div>
 
-    <div id="modal" class="modal hidden">
-        <div class="modal-overlay"></div>
-        <div class="modal-content">
-            <div id="questionView">
-                <h3>Did the course open?</h3>
-                <div class="modal-buttons">
-                    <button id="yesBtn" class="btn-modal">Yes</button>
-                    <button id="noBtn" class="btn-modal btn-modal-secondary">No</button>
-                </div>
+    <!-- Toast notification for progressive disclosure -->
+    <div id="toast" class="toast hidden">
+        <button class="toast-close hidden" id="toastClose" aria-label="Close">&times;</button>
+
+        <div id="toastLoading">
+            <p class="toast-text">Opening course...</p>
+        </div>
+
+        <div id="toastQuestion" class="hidden">
+            <p class="toast-text">Did the course open?</p>
+            <div class="toast-buttons">
+                <button id="toastYesBtn" class="btn-toast">Yes</button>
+                <button id="toastNoBtn" class="btn-toast btn-toast-secondary">No</button>
             </div>
-            <div id="helpView" class="hidden">
-                <p class="help-text">
-                    Download and install Toolbox and try again
-                </p>
-                <a href="https://www.jetbrains.com/toolbox-app/" target="_blank" class="toolbox-link">
-                    Download JetBrains Toolbox
-                </a>
-            </div>
+        </div>
+
+        <div id="toastHelp" class="hidden">
+            <p class="toast-title">Install JetBrains Toolbox</p>
+            <p class="toast-text">To open courses in your IDE, you need Toolbox App</p>
+            <a href="https://www.jetbrains.com/toolbox-app/" target="_blank" class="toolbox-link-small">
+                Download JetBrains Toolbox
+            </a>
         </div>
     </div>
 
